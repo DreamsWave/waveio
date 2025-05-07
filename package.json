@@ -1,7 +1,6 @@
 {
   "name": "waveio",
   "version": "0.0.1",
-  "packageManager": "pnpm@9.1.4",
   "description": "",
   "author": "DreamsWave",
   "engines": {
@@ -9,8 +8,8 @@
   },
   "scripts": {
     "dev:spotlight": "spotlight",
-    "dev:next": "next dev",
-    "dev": "run-p dev:spotlight dev:next",
+    "dev:next": "next dev --turbopack",
+    "dev": "run-p dev:*",
     "build": "next build",
     "start": "next start",
     "build-stats": "cross-env ANALYZE=true npm run build",
