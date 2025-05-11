@@ -1,3 +1,10 @@
+# 1.0.0 (2025-05-11)
+
+
+### Features
+
+* add Storybook stories for shadcn components ([51ed8cf](https://github.com/DreamsWave/waveio/commit/51ed8cfcd73ba128875ba0f1838c41974574d7dd))
+
 ## [3.66.6](https://github.com/ixartz/Next-js-Boilerplate/compare/v3.66.5...v3.66.6) (2025-05-07)
 
 
