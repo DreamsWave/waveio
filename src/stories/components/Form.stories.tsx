@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { logger } from '@/libs/Logger';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -45,7 +44,7 @@ export const Basic: Story = {
       });
 
       function onSubmit(values: z.infer<typeof formSchema>) {
-        logger.info(values);
+        console.warn(values);
       }
 
       return (
