@@ -1,4 +1,5 @@
 import { Sponsors } from '@/components/Sponsors';
+import { Button } from '@/components/ui/button';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 type IIndexProps = {
@@ -53,6 +54,7 @@ export default async function Index(props: IIndexProps) {
         Designed with developer experience in mind, it includes:
       </p>
       <ul className="mt-3 text-base">
+        <li><Button>My cool button</Button></li>
         <li>🚀 Next.js with App Router support</li>
         <li>🔥 TypeScript for type checking</li>
         <li>💎 Tailwind CSS integration</li>

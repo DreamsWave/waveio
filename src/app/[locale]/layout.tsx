@@ -49,15 +49,11 @@ export default async function RootLayout(props: {
   setRequestLocale(locale);
 
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider>
-          <PostHogProvider>
-            {props.children}
-          </PostHogProvider>
-          <DemoBadge />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider>
+      <PostHogProvider>
+        {props.children}
+      </PostHogProvider>
+      <DemoBadge />
+    </NextIntlClientProvider>
   );
 }
