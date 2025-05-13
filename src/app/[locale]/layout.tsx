@@ -2,9 +2,12 @@ import type { Metadata } from 'next';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 import { DemoBadge } from '@/components/DemoBadge';
 import { routing } from '@/libs/i18nRouting';
+import { ThemeProvider } from '@/libs/theme';
+import { getInitialThemeScript } from '@/libs/theme/script';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import React from 'react';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {
@@ -49,11 +52,20 @@ export default async function RootLayout(props: {
   setRequestLocale(locale);
 
   return (
-    <NextIntlClientProvider>
-      <PostHogProvider>
-        {props.children}
-      </PostHogProvider>
-      <DemoBadge />
-    </NextIntlClientProvider>
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getInitialThemeScript() }} />
+      </head>
+      <body>
+        <ThemeProvider storageKey="theme">
+          <NextIntlClientProvider>
+            <PostHogProvider>
+              {props.children}
+            </PostHogProvider>
+            <DemoBadge />
+          </NextIntlClientProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

@@ -1,5 +1,7 @@
-import { Sponsors } from '@/components/Sponsors';
+import { CleanThemeStorageButton } from '@/components/clean-theme-storage-button';
+import { ThemeToggles } from '@/components/theme-toggles';
 import { Button } from '@/components/ui/button';
+import { ThemeProvider } from '@/libs/theme';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 type IIndexProps = {
@@ -22,13 +24,22 @@ export async function generateMetadata(props: IIndexProps) {
 export default async function Index(props: IIndexProps) {
   const { locale } = await props.params;
   setRequestLocale(locale);
-  const t = await getTranslations({
-    locale,
-    namespace: 'Index',
-  });
 
   return (
     <>
+      <section className="flex flex-col gap-4">
+        <div className="flex flex-col text-center gap-2">
+          <h2>Global Themes</h2>
+          <ThemeToggles type="global" />
+        </div>
+        <ThemeProvider storageKey="theme-pc">
+          <div className="flex flex-col text-center gap-2">
+            <h2>PC Themes</h2>
+            <ThemeToggles type="pc" />
+          </div>
+        </ThemeProvider>
+        <CleanThemeStorageButton />
+      </section>
       <p>
         {`Follow `}
         <a
@@ -125,8 +136,6 @@ export default async function Index(props: IIndexProps) {
         Their services integrate seamlessly with the boilerplate, and we
         recommend trying them out.
       </p>
-      <h2 className="mt-5 text-2xl font-bold">{t('sponsors_title')}</h2>
-      <Sponsors />
     </>
   );
 };
