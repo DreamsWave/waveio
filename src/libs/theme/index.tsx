@@ -1,26 +1,23 @@
 'use client';
 
 import type { ThemeProviderProps as ThemeProps, UseThemeProps } from './types';
-import { APP_THEMES } from '@/utils/constants';
 import * as React from 'react';
 
 const MEDIA = '(prefers-color-scheme: dark)';
 const isServer = typeof window === 'undefined';
 const ThemeContext = React.createContext<UseThemeProps | undefined>(undefined);
 const defaultContext: UseThemeProps = {
-  setTheme: () => {},
-  themes: [],
   theme: undefined,
-  resolvedTheme: undefined,
+  colorMode: undefined,
+  setTheme: () => {},
+  setColorMode: () => {},
+  resolvedTheme: '',
+  systemColorMode: '',
 };
 
-const saveToLS = (storageKey: string, value: string | undefined) => {
+const saveToLS = (key: string, value: string) => {
   try {
-    if (value === undefined) {
-      localStorage.removeItem(storageKey);
-    } else {
-      localStorage.setItem(storageKey, value);
-    }
+    localStorage.setItem(key, value);
   } catch (e) {
     console.error(e);
   }
@@ -35,157 +32,89 @@ export const ThemeProvider = (props: ThemeProps) => {
 };
 
 const Theme = ({
-  forcedTheme,
-  storageKey = 'theme',
-  themes = APP_THEMES,
-  defaultTheme = 'system',
-  attribute = 'data-theme',
+  // storageKey = 'theme',
+  // themes = THEMES,
+  defaultTheme = 'default',
+  defaultColorMode = 'system',
   enableSystem = true,
   children,
   isRoot,
 }: ThemeProps & { isRoot: boolean }) => {
   const globalContext = React.use(ThemeContext);
-  const globalTheme = globalContext?.theme;
+  // const globalTheme = globalContext?.theme;
+  const globalColorMode = globalContext?.colorMode;
+  const globalResolvedTheme = globalContext?.resolvedTheme;
 
-  const [theme, setThemeState] = React.useState<string>(() => {
-    const storedTheme = getTheme(storageKey, defaultTheme);
-    if (!storedTheme && globalTheme && !isRoot) {
-      return globalTheme;
-    }
-    return storedTheme || defaultTheme;
-  });
-  const [resolvedTheme, setResolvedTheme] = React.useState<string>(() =>
-    resolveTheme(theme, defaultTheme),
+  // Initialize theme and color mode
+  const [theme, setThemeState] = React.useState<string>(() =>
+    isRoot ? getTheme('theme', defaultTheme) : getTheme('theme-pc', 'inherit'),
   );
-  const wrapperRef = React.useRef<HTMLDivElement>(null);
-
-  const applyTheme = React.useCallback(
-    (themeToApply: string | undefined) => {
-      if (isServer) {
-        return;
-      }
-      const resolved = resolveTheme(themeToApply, defaultTheme);
-      const element = isRoot ? document.documentElement : wrapperRef.current;
-      if (element) {
-        const attributes = Array.isArray(attribute) ? attribute : [attribute];
-        attributes.forEach((attr) => {
-          element.setAttribute(attr, resolved);
-        });
-      }
-    },
-    [attribute, isRoot, defaultTheme],
+  const [colorMode, setColorModeState] = React.useState<string>(() =>
+    isRoot ? getTheme('color-mode', defaultColorMode) : getTheme('color-mode-pc', 'inherit'),
   );
+  const [systemColorMode, setSystemColorMode] = React.useState<string>(getSystemColorMode);
 
-  const setTheme = React.useCallback(
-    (value: React.SetStateAction<string | undefined>) => {
-      const newValue = typeof value === 'function' ? value(theme) : value;
-      const finalValue = newValue ?? defaultTheme;
-      setThemeState(finalValue);
-      saveToLS(storageKey, finalValue);
-      applyTheme(finalValue);
-      if (storageKey === 'theme' && !localStorage.getItem('theme-pc')) {
-        window.dispatchEvent(new StorageEvent('storage', { key: 'theme-pc', newValue: finalValue }));
-      }
-    },
-    [storageKey, applyTheme, defaultTheme, theme],
-  );
+  // Compute resolved color mode and theme
+  const resolvedColorMode = colorMode === 'system' ? systemColorMode : colorMode;
+  const resolvedTheme = (isRoot
+    ? `${theme}-${resolvedColorMode}`
+    : theme === 'inherit'
+      ? globalResolvedTheme
+      : `${theme}-${colorMode === 'inherit' ? globalColorMode === 'system' ? systemColorMode : globalColorMode : resolvedColorMode}`) ?? 'default';
 
-  // Sync PC theme with global theme when no PC theme is stored
-  React.useEffect(() => {
-    if (isRoot || !globalTheme) {
+  const applyTheme = React.useCallback(() => {
+    if (isServer) {
       return;
     }
-    const storedTheme = localStorage.getItem(storageKey);
-    if (!storedTheme && globalTheme !== theme) {
-      setThemeState(globalTheme);
-      applyTheme(globalTheme);
-    }
-  }, [globalTheme, isRoot, storageKey, applyTheme, theme]);
+    const attr = isRoot ? 'data-global-theme' : 'data-pc-theme';
+    document.documentElement.setAttribute(attr, resolvedTheme);
+  }, [isRoot, resolvedTheme]);
 
-  // Listen for localStorage changes to theme-pc
+  React.useLayoutEffect(() => {
+    applyTheme();
+  }, [applyTheme]);
+
   React.useEffect(() => {
-    if (isRoot || storageKey !== 'theme-pc') {
+    if (!enableSystem) {
       return;
     }
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'theme-pc' && e.newValue !== theme) {
-        setThemeState(e.newValue || defaultTheme);
-        applyTheme(e.newValue || defaultTheme);
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, [storageKey, theme, applyTheme, defaultTheme, isRoot]);
-
-  // Handle system mode changes
-  React.useEffect(() => {
-    if (!enableSystem || theme !== 'system') {
-      setResolvedTheme(resolveTheme(theme, defaultTheme));
-      return;
-    }
-
     const media = window.matchMedia(MEDIA);
-    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
-      const newSystemTheme = 'matches' in e ? (e.matches ? 'dark' : 'light') : getSystemTheme();
-      console.warn('System theme change:', { newSystemTheme, theme, enableSystem }); // Debug log
-      setResolvedTheme(newSystemTheme);
-      if (theme === 'system') {
-        applyTheme('system');
-      }
+    const handleChange = (e: MediaQueryListEvent) => {
+      setSystemColorMode(e.matches ? 'dark' : 'light');
     };
-
     media.addEventListener('change', handleChange);
-    handleChange(media);
     return () => media.removeEventListener('change', handleChange);
-  }, [theme, enableSystem, applyTheme, defaultTheme]);
+  }, [enableSystem]);
 
-  // Apply theme on mount and theme changes
-  React.useEffect(() => {
-    applyTheme(forcedTheme ?? theme);
-  }, [forcedTheme, theme, applyTheme]);
+  const setTheme = React.useCallback((newTheme: string) => {
+    setThemeState(newTheme);
+    saveToLS(isRoot ? 'theme' : 'theme-pc', newTheme);
+  }, [isRoot]);
+
+  const setColorMode = React.useCallback((newColorMode: string) => {
+    setColorModeState(newColorMode);
+    saveToLS(isRoot ? 'color-mode' : 'color-mode-pc', newColorMode);
+  }, [isRoot]);
 
   const providerValue = React.useMemo((): UseThemeProps => ({
     theme,
+    colorMode,
     setTheme,
-    resolvedTheme: theme === 'system' ? resolvedTheme : theme,
-    themes: enableSystem ? [...themes, 'system'] : themes,
-    systemTheme: enableSystem ? resolvedTheme : undefined,
-  }), [theme, setTheme, resolvedTheme, enableSystem, themes]);
+    setColorMode,
+    resolvedTheme: resolvedTheme ?? 'default',
+    systemColorMode,
+  }), [theme, colorMode, setTheme, setColorMode, resolvedTheme, systemColorMode]);
 
-  // Apply theme synchronously for client-side rendering
-  if (!isServer) {
-    const resolved = resolveTheme(forcedTheme ?? theme, defaultTheme);
-    if (isRoot) {
-      const attributes = Array.isArray(attribute) ? attribute : [attribute];
-      attributes.forEach((attr) => {
-        document.documentElement.setAttribute(attr, resolved);
-      });
-    } else if (wrapperRef.current) {
-      const attributes = Array.isArray(attribute) ? attribute : [attribute];
-      attributes.forEach((attr) => {
-        wrapperRef.current!.setAttribute(attr, resolved);
-      });
-    }
-  }
-
-  return isRoot
-    ? (
-        <ThemeContext value={providerValue}>
-          {children}
-        </ThemeContext>
-      )
-    : (
-        <div ref={wrapperRef} data-theme-pc={storageKey === 'theme-pc' ? 'true' : undefined}>
-          <ThemeContext value={providerValue}>
-            {children}
-          </ThemeContext>
-        </div>
-      );
+  return (
+    <ThemeContext value={providerValue}>
+      {isRoot ? children : <div data-theme-pc="true">{children}</div>}
+    </ThemeContext>
+  );
 };
 
-const getTheme = (key: string, fallback: string): string | undefined => {
+const getTheme = (key: string, fallback: string): string => {
   if (isServer) {
-    return undefined;
+    return fallback;
   }
   try {
     return localStorage.getItem(key) || fallback;
@@ -194,18 +123,9 @@ const getTheme = (key: string, fallback: string): string | undefined => {
   }
 };
 
-const getSystemTheme = (): string => {
+const getSystemColorMode = (): string => {
   if (isServer) {
     return 'light';
   }
   return window.matchMedia(MEDIA).matches ? 'dark' : 'light';
 };
-
-const resolveTheme = (theme: string | undefined, defaultTheme: string): string => {
-  if (theme === 'system') {
-    return getSystemTheme();
-  }
-  return theme ?? defaultTheme;
-};
-
-export type { ThemeProviderProps as ThemeProps, UseThemeProps } from './types';

@@ -1,0 +1,13 @@
+html[data-pc-theme='purple-light'] [data-theme-pc='true'] {
+  --radius: 0.625rem;
+  --background: oklch(0.94 0.06 300);
+  --foreground: oklch(0.25 0.1 300);
+  /* Same as global purple-light */
+}
+
+html[data-pc-theme='purple-dark'] [data-theme-pc='true'] {
+  --radius: 0.625rem;
+  --background: oklch(0.22 0.1 300);
+  --foreground: oklch(0.9 0.05 300);
+  /* Same as global purple-dark */
+}

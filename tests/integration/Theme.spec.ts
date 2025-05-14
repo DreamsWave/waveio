@@ -6,107 +6,98 @@ test.describe('Theme Management', () => {
     await page.evaluate(() => localStorage.clear());
     await page.waitForLoadState('domcontentloaded');
     await page.waitForFunction(
-      () => document.documentElement.getAttribute('data-theme') !== null,
+      () => document.documentElement.getAttribute('data-global-theme') !== null,
       {},
       { timeout: 15000 },
     );
   });
 
-  test('should default to system preferred mode when localStorage is empty', async ({ page }) => {
-    const systemMode = await page.evaluate(() =>
+  test('should default to "default" theme with system color mode when localStorage is empty', async ({ page }) => {
+    const systemColorMode = await page.evaluate(() =>
       window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
     );
-    const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
+    const pcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
 
-    expect(globalTheme).toBe(systemMode);
+    expect(globalTheme).toBe(`default-${systemColorMode}`);
+    expect(pcTheme).toBe(`default-${systemColorMode}`);
   });
 
-  test('should set global and PC themes to selected global theme when no PC theme is selected', async ({ page }) => {
-    await page
-      .locator('[data-testid="global-themes"] button[data-testid="global-theme-blue-light"]')
-      .click();
+  test('should set global and PC themes to selected global theme and color mode when no PC theme is selected', async ({ page }) => {
+    await page.locator('[data-testid="global-theme-select-trigger"]').click();
+    await page.locator('[data-testid="global-theme-blue"]').click();
+    await page.locator('[data-testid="global-color-mode-select-trigger"]').click();
+    await page.locator('[data-testid="global-color-mode-light"]').click();
+
     await page.waitForFunction(
-      () => document.documentElement.getAttribute('data-theme') === 'blue-light',
+      () => document.documentElement.getAttribute('data-global-theme') === 'blue-light',
       {},
       { timeout: 15000 },
     );
-    const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    const pcTheme = await page.evaluate(() =>
-      document.querySelector('div[data-theme-pc="true"]')?.getAttribute('data-theme'),
-    );
+    const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
+    const pcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
 
     expect(globalTheme).toBe('blue-light');
     expect(pcTheme).toBe('blue-light');
   });
 
   test('should show correct theme on page reload', async ({ page }) => {
-    await page
-      .locator('[data-testid="global-themes"] button[data-testid="global-theme-blue-light"]')
-      .click();
-    await page.waitForFunction(
-      () => document.documentElement.getAttribute('data-theme') === 'blue-light',
-      {},
-      { timeout: 15000 },
-    );
+    await page.locator('[data-testid="global-theme-select-trigger"]').click();
+    await page.locator('[data-testid="global-theme-blue"]').click();
+    await page.locator('[data-testid="global-color-mode-select-trigger"]').click();
+    await page.locator('[data-testid="global-color-mode-light"]').click();
+
     await page.reload();
-    await page.waitForLoadState('domcontentloaded');
     await page.waitForFunction(
-      () => document.documentElement.getAttribute('data-theme') !== null,
+      () => document.documentElement.getAttribute('data-global-theme') === 'blue-light',
       {},
       { timeout: 15000 },
     );
-    const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
+    const pcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
 
     expect(globalTheme).toBe('blue-light');
+    expect(pcTheme).toBe('blue-light');
   });
 
-  test('should update all unselected themes when system mode changes and localStorage is empty', async ({ page }) => {
-    // Ensure theme is 'system'
-    await page.evaluate(() => localStorage.setItem('theme', 'system'));
-    await page.reload(); // Reload to apply the theme
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForFunction(
-      () => document.documentElement.getAttribute('data-theme') !== null,
-      {},
-      { timeout: 15000 },
-    );
+  test('should update all unselected themes when system mode changes with "system" color mode', async ({ page }) => {
+    // Set theme to 'retro' and color mode to 'system'
+    await page.locator('[data-testid="global-theme-select-trigger"]').click();
+    await page.locator('[data-testid="global-theme-retro"]').click();
+    await page.locator('[data-testid="global-color-mode-select-trigger"]').click();
+    await page.locator('[data-testid="global-color-mode-system"]').click();
 
-    const initialTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    const isDark = await page.evaluate(() =>
-      window.matchMedia('(prefers-color-scheme: dark)').matches,
-    );
+    // Reload to ensure settings are applied
+    await page.reload();
+    const initialGlobalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
+    const isDark = await page.evaluate(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-    expect(initialTheme).toBe(isDark ? 'dark' : 'light');
+    expect(initialGlobalTheme).toBe(`retro-${isDark ? 'dark' : 'light'}`);
 
-    const themeState = await page.evaluate(() => {
-      const themeContext = (window as any).__REACT_CONTEXTS__.ThemeContext;
-      return themeContext?.theme;
-    });
-    console.warn('Theme state before matchMedia:', themeState);
-
+    // Simulate system color mode change
     await page.evaluate(() => {
-      console.warn('Starting matchMedia mock');
       const media = window.matchMedia('(prefers-color-scheme: dark)');
       const newMatches = !media.matches;
-      const event = new Event('change') as MediaQueryListEvent;
-      Object.defineProperty(event, 'matches', { value: newMatches });
-      Object.defineProperty(event, 'media', { value: '(prefers-color-scheme: dark)' });
-      console.warn('Dispatching change event:', { matches: newMatches });
+      const event = new MediaQueryListEvent('change', { matches: newMatches });
+      console.warn('Dispatching change event with matches:', newMatches); // Debug log
       media.dispatchEvent(event);
     });
 
+    // Wait for the theme to update to the opposite mode
+    const expectedTheme = `retro-${isDark ? 'light' : 'dark'}`;
     await page.waitForFunction(
-      (initialTheme) => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        console.warn('Checking theme change:', { initialTheme, currentTheme });
-        return currentTheme !== initialTheme;
-      },
-      initialTheme,
+      expected => document.documentElement.getAttribute('data-global-theme') === expected,
+      expectedTheme,
       { timeout: 30000 },
     );
-    const updatedTheme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
 
-    expect(updatedTheme).not.toBe(initialTheme);
-    expect(updatedTheme).toBe(isDark ? 'light' : 'dark');
+    const updatedGlobalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
+    const updatedPcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
+
+    console.warn('Updated global theme:', updatedGlobalTheme); // Debug log
+    console.warn('Updated PC theme:', updatedPcTheme); // Debug log
+
+    expect(updatedGlobalTheme).toBe(expectedTheme);
+    expect(updatedPcTheme).toBe(expectedTheme);
   });
 });

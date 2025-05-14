@@ -1,8 +1,15 @@
 import { CleanThemeStorageButton } from '@/components/clean-theme-storage-button';
 import { ThemeToggles } from '@/components/theme-toggles';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ThemeProvider } from '@/libs/theme';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import dynamic from 'next/dynamic';
+
+const PC = dynamic(() => import('@/components/PC'), {
+  ssr: true, // Enable server-side rendering
+  loading: () => <Skeleton className="h-full w-full" />,
+});
 
 type IIndexProps = {
   params: Promise<{ locale: string }>;
@@ -28,14 +35,15 @@ export default async function Index(props: IIndexProps) {
   return (
     <>
       <section className="flex flex-col gap-4">
-        <div className="flex flex-col text-center gap-2">
-          <h2>Global Themes</h2>
+        <h2>Global scope</h2>
+        <div className="flex flex-col gap-2">
           <ThemeToggles type="global" />
         </div>
         <ThemeProvider storageKey="theme-pc">
-          <div className="flex flex-col text-center gap-2">
-            <h2>PC Themes</h2>
+          <h2>PC scope</h2>
+          <div className="flex flex-col gap-2">
             <ThemeToggles type="pc" />
+            <PC />
           </div>
         </ThemeProvider>
         <CleanThemeStorageButton />

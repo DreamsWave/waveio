@@ -1,19 +1,19 @@
 export type Attribute = string | 'class';
 
 export type UseThemeProps = {
-  theme: string | undefined;
-  setTheme: React.Dispatch<React.SetStateAction<string | undefined>>;
-  resolvedTheme: string | undefined;
-  themes: string[];
-  systemTheme?: string | undefined;
+  theme: string | undefined; // e.g., 'blue'
+  colorMode: string | undefined; // e.g., 'light', 'dark', 'system'
+  setTheme: (theme: string) => void;
+  setColorMode: (colorMode: string) => void;
+  resolvedTheme: string; // e.g., 'blue-light'
+  systemColorMode: string; // 'light' or 'dark'
 };
 
 export type ThemeProviderProps = {
-  forcedTheme?: string;
   storageKey?: string;
   themes?: string[];
   defaultTheme?: string;
-  attribute?: Attribute | Attribute[];
+  defaultColorMode?: string;
   enableSystem?: boolean;
   children: React.ReactNode;
 };

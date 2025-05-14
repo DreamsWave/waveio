@@ -1,12 +1,2 @@
-export const APP_THEMES = [
-  'light',
-  'dark',
-  'retro-light',
-  'retro-dark',
-  'blue-light',
-  'blue-dark',
-  'green-light',
-  'green-dark',
-  'purple-light',
-  'purple-dark',
-];
+export const THEMES = ['default', 'retro', 'blue', 'green', 'purple'];
+export const COLOR_MODES = ['light', 'dark', 'system'];

@@ -1,24 +1,24 @@
 export const getInitialThemeScript = () => `
   (function() {
-    const defaultTheme = 'system';
+    const defaultTheme = 'default';
+    const defaultColorMode = 'system';
     try {
-      // Compute global theme
-      const globalKey = 'theme';
-      const globalTheme = localStorage.getItem(globalKey) || defaultTheme;
-      const globalResolved = globalTheme === 'system' 
-        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-        : globalTheme;
-      document.documentElement.setAttribute('data-theme', globalResolved);
+      // Global
+      const theme = localStorage.getItem('theme') || defaultTheme;
+      const colorMode = localStorage.getItem('color-mode') || defaultColorMode;
+      const systemColorMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const resolvedColorMode = colorMode === 'system' ? systemColorMode : colorMode;
+      const globalResolvedTheme = \`\${theme}-\${resolvedColorMode}\`;
+      document.documentElement.setAttribute('data-global-theme', globalResolvedTheme);
 
-      // Compute PC theme
-      const pcKey = 'theme-pc';
-      const pcTheme = localStorage.getItem(pcKey);
-      const pcResolved = pcTheme 
-        ? (pcTheme === 'system' 
-            ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-            : pcTheme)
-        : globalResolved;
-      document.documentElement.setAttribute('data-theme-pc', pcResolved);
+      // PC
+      const themePc = localStorage.getItem('theme-pc') || 'inherit';
+      const colorModePc = localStorage.getItem('color-mode-pc') || 'inherit';
+      const pcTheme = themePc === 'inherit' ? theme : themePc;
+      const pcColorMode = colorModePc === 'inherit' ? colorMode : colorModePc;
+      const pcResolvedColorMode = pcColorMode === 'system' ? systemColorMode : pcColorMode;
+      const pcResolvedTheme = themePc === 'inherit' ? globalResolvedTheme : \`\${pcTheme}-\${pcResolvedColorMode}\`;
+      document.documentElement.setAttribute('data-pc-theme', pcResolvedTheme);
     } catch (e) {
       console.error(e);
     }

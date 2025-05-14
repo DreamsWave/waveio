@@ -1,0 +1,13 @@
+html[data-pc-theme='retro-light'] [data-theme-pc='true'] {
+  --radius: 0.5rem;
+  --background: oklch(0.92 0.05 70);
+  --foreground: oklch(0.3 0.08 70);
+  /* Same as global retro-light */
+}
+
+html[data-pc-theme='retro-dark'] [data-theme-pc='true'] {
+  --radius: 0.5rem;
+  --background: oklch(0.25 0.08 70);
+  --foreground: oklch(0.9 0.05 70);
+  /* Same as global retro-dark */
+}

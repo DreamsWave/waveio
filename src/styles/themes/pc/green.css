@@ -1,0 +1,13 @@
+html[data-pc-theme='green-light'] [data-theme-pc='true'] {
+  --radius: 0.625rem;
+  --background: oklch(0.94 0.06 140);
+  --foreground: oklch(0.25 0.1 140);
+  /* Same as global green-light */
+}
+
+html[data-pc-theme='green-dark'] [data-theme-pc='true'] {
+  --radius: 0.625rem;
+  --background: oklch(0.22 0.1 140);
+  --foreground: oklch(0.9 0.05 140);
+  /* Same as global green-dark */
+}
