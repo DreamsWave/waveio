@@ -1,4 +1,5 @@
-html[data-global-theme='purple-light'] {
+html[data-global-theme='purple-light'],
+html[data-pc-theme='purple-light'] [data-theme-pc='true'] {
   --radius: 0.625rem;
   --background: oklch(0.94 0.06 300); /* Light purple */
   --foreground: oklch(0.25 0.1 300); /* Dark purple */
@@ -33,7 +34,8 @@ html[data-global-theme='purple-light'] {
   --sidebar-ring: oklch(0.7 0.15 300);
 }
 
-html[data-global-theme='purple-dark'] {
+html[data-global-theme='purple-dark'],
+html[data-pc-theme='purple-dark'] [data-theme-pc='true'] {
   --radius: 0.625rem;
   --background: oklch(0.22 0.1 300); /* Dark purple */
   --foreground: oklch(0.9 0.05 300); /* Light purple */

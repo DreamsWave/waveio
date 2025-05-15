@@ -1,4 +1,5 @@
-html[data-global-theme='retro-light'] {
+html[data-global-theme='retro-light'],
+html[data-pc-theme='retro-light'] [data-theme-pc='true'] {
   --radius: 0.5rem; /* Slightly softer for retro feel */
   --background: oklch(0.92 0.05 70); /* Light beige/brown */
   --foreground: oklch(0.3 0.08 70); /* Dark brown */
@@ -33,7 +34,8 @@ html[data-global-theme='retro-light'] {
   --sidebar-ring: oklch(0.7 0.1 70);
 }
 
-html[data-global-theme='retro-dark'] {
+html[data-global-theme='retro-dark'],
+html[data-pc-theme='retro-dark'] [data-theme-pc='true'] {
   --radius: 0.5rem;
   --background: oklch(0.25 0.08 70); /* Dark brown */
   --foreground: oklch(0.9 0.05 70); /* Light beige */

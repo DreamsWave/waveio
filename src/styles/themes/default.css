@@ -1,3 +1,4 @@
+html[data-global-theme='default-light'],
 html[data-pc-theme='default-light'] [data-theme-pc='true'] {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -33,6 +34,7 @@ html[data-pc-theme='default-light'] [data-theme-pc='true'] {
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+html[data-global-theme='default-dark'],
 html[data-pc-theme='default-dark'] [data-theme-pc='true'] {
   --radius: 0.625rem;
   --background: oklch(0.145 0 0);

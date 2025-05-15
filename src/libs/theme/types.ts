@@ -1,12 +1,15 @@
 export type Attribute = string | 'class';
 
+export type ThemeName = 'default' | 'blue' | 'retro' | 'green' | 'purple' | 'inherit';
+export type ColorMode = 'light' | 'dark' | 'system' | 'inherit';
+
 export type UseThemeProps = {
-  theme: string | undefined; // e.g., 'blue'
-  colorMode: string | undefined; // e.g., 'light', 'dark', 'system'
-  setTheme: (theme: string) => void;
-  setColorMode: (colorMode: string) => void;
-  resolvedTheme: string; // e.g., 'blue-light'
-  systemColorMode: string; // 'light' or 'dark'
+  theme: ThemeName | undefined;
+  colorMode: ColorMode | undefined;
+  setTheme: (theme: ThemeName) => void;
+  setColorMode: (colorMode: ColorMode) => void;
+  resolvedTheme: string;
+  systemColorMode: 'light' | 'dark';
 };
 
 export type ThemeProviderProps = {

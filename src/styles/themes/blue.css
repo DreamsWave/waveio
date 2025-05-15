@@ -1,7 +1,8 @@
+html[data-global-theme='blue-light'],
 html[data-pc-theme='blue-light'] [data-theme-pc='true'] {
   --radius: 0.625rem;
-  --background: oklch(0.95 0.05 240);
-  --foreground: oklch(0.2 0.1 240);
+  --background: oklch(0.95 0.05 240); /* Light blue */
+  --foreground: oklch(0.2 0.1 240); /* Dark blue */
   --card: oklch(0.97 0.03 240);
   --card-foreground: oklch(0.2 0.1 240);
   --popover: oklch(0.98 0.02 240);
@@ -33,10 +34,11 @@ html[data-pc-theme='blue-light'] [data-theme-pc='true'] {
   --sidebar-ring: oklch(0.7 0.15 240);
 }
 
+html[data-global-theme='blue-dark'],
 html[data-pc-theme='blue-dark'] [data-theme-pc='true'] {
   --radius: 0.625rem;
-  --background: oklch(0.2 0.1 240);
-  --foreground: oklch(0.95 0.05 240);
+  --background: oklch(0.2 0.1 240); /* Dark blue */
+  --foreground: oklch(0.95 0.05 240); /* Light blue */
   --card: oklch(0.25 0.1 240);
   --card-foreground: oklch(0.9 0.05 240);
   --popover: oklch(0.3 0.08 240);

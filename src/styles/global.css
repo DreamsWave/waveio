@@ -1,19 +1,12 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-/* Global themes */
-@import './themes/global/default.css';
-@import './themes/global/blue.css';
-@import './themes/global/retro.css';
-@import './themes/global/green.css';
-@import './themes/global/purple.css';
-
-/* PC themes */
-@import './themes/pc/default.css';
-@import './themes/pc/blue.css';
-@import './themes/pc/retro.css';
-@import './themes/pc/green.css';
-@import './themes/pc/purple.css';
+/* Themes */
+@import './themes/default.css';
+@import './themes/blue.css';
+@import './themes/retro.css';
+@import './themes/green.css';
+@import './themes/purple.css';
 
 @custom-variant dark (&:where([data-theme$=dark], [data-theme$=dark] *));
 

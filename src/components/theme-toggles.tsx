@@ -13,14 +13,6 @@ export const ThemeToggles = ({ type }: { type: 'global' | 'pc' }) => {
     setMounted(true);
   }, []);
 
-  function changeTheme(theme: string) {
-    setTheme(theme);
-  }
-
-  function changeColorMode(colorMode: string) {
-    setColorMode(colorMode);
-  }
-
   const themes = type === 'pc' ? ['inherit', ...THEMES] : THEMES;
   const colorModes = type === 'pc' ? ['inherit', ...COLOR_MODES] : COLOR_MODES;
 
@@ -34,14 +26,11 @@ export const ThemeToggles = ({ type }: { type: 'global' | 'pc' }) => {
           {mounted ? theme : 'Loading...'}
         </h3>
         <Select
-          value={mounted ? theme : 'default'} // Default to 'default' when not mounted
-          onValueChange={changeTheme}
+          value={mounted ? theme : 'default'}
+          onValueChange={value => setTheme(value as 'default' | 'blue' | 'retro' | 'green' | 'purple' | 'inherit')}
           disabled={!mounted}
         >
-          <SelectTrigger
-            className="w-[180px]"
-            data-testid={`${type}-theme-select-trigger`}
-          >
+          <SelectTrigger className="w-[180px]" data-testid={`${type}-theme-select-trigger`}>
             <SelectValue placeholder={mounted ? 'Select theme' : 'Loading...'} />
           </SelectTrigger>
           <SelectContent>
@@ -61,14 +50,11 @@ export const ThemeToggles = ({ type }: { type: 'global' | 'pc' }) => {
           {mounted ? colorMode : 'Loading...'}
         </h3>
         <Select
-          value={mounted ? colorMode : 'system'} // Default to 'system' when not mounted
-          onValueChange={changeColorMode}
+          value={mounted ? colorMode : 'system'}
+          onValueChange={value => setColorMode(value as 'light' | 'dark' | 'system' | 'inherit')}
           disabled={!mounted}
         >
-          <SelectTrigger
-            className="w-[180px]"
-            data-testid={`${type}-color-mode-select-trigger`}
-          >
+          <SelectTrigger className="w-[180px]" data-testid={`${type}-color-mode-select-trigger`}>
             <SelectValue placeholder={mounted ? 'Select color mode' : 'Loading...'} />
           </SelectTrigger>
           <SelectContent>

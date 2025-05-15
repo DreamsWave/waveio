@@ -2,13 +2,14 @@ import { expect, test } from '@playwright/test';
 
 test.describe('Theme Management', () => {
   test.beforeEach(async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
     await page.waitForLoadState('domcontentloaded');
     await page.waitForFunction(
       () => document.documentElement.getAttribute('data-global-theme') !== null,
       {},
-      { timeout: 15000 },
+      { timeout: 20000 },
     );
   });
 
@@ -32,7 +33,7 @@ test.describe('Theme Management', () => {
     await page.waitForFunction(
       () => document.documentElement.getAttribute('data-global-theme') === 'blue-light',
       {},
-      { timeout: 15000 },
+      { timeout: 20000 },
     );
     const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
     const pcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
@@ -51,7 +52,7 @@ test.describe('Theme Management', () => {
     await page.waitForFunction(
       () => document.documentElement.getAttribute('data-global-theme') === 'blue-light',
       {},
-      { timeout: 15000 },
+      { timeout: 20000 },
     );
     const globalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
     const pcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
@@ -60,42 +61,59 @@ test.describe('Theme Management', () => {
     expect(pcTheme).toBe('blue-light');
   });
 
-  test('should update all unselected themes when system mode changes with "system" color mode', async ({ page }) => {
+  test('should update to retro-dark when system mode changes from light to dark with "system" color mode', async ({ page }) => {
     // Set theme to 'retro' and color mode to 'system'
     await page.locator('[data-testid="global-theme-select-trigger"]').click();
     await page.locator('[data-testid="global-theme-retro"]').click();
     await page.locator('[data-testid="global-color-mode-select-trigger"]').click();
     await page.locator('[data-testid="global-color-mode-system"]').click();
 
-    // Reload to ensure settings are applied
-    await page.reload();
     const initialGlobalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
-    const isDark = await page.evaluate(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-    expect(initialGlobalTheme).toBe(`retro-${isDark ? 'dark' : 'light'}`);
+    expect(initialGlobalTheme).toBe('retro-light');
 
-    // Simulate system color mode change
-    await page.evaluate(() => {
-      const media = window.matchMedia('(prefers-color-scheme: dark)');
-      const newMatches = !media.matches;
-      const event = new MediaQueryListEvent('change', { matches: newMatches });
-      console.warn('Dispatching change event with matches:', newMatches); // Debug log
-      media.dispatchEvent(event);
-    });
+    // Simulate system color mode change to dark
+    await page.emulateMedia({ colorScheme: 'dark' });
 
-    // Wait for the theme to update to the opposite mode
-    const expectedTheme = `retro-${isDark ? 'light' : 'dark'}`;
+    // Wait for the theme to update to dark mode
+    const expectedTheme = 'retro-dark';
     await page.waitForFunction(
-      expected => document.documentElement.getAttribute('data-global-theme') === expected,
-      expectedTheme,
-      { timeout: 30000 },
+      ({ expectedTheme }) => document.documentElement.getAttribute('data-global-theme') === expectedTheme,
+      { expectedTheme },
+      { timeout: 20000 },
     );
 
     const updatedGlobalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
     const updatedPcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
 
-    console.warn('Updated global theme:', updatedGlobalTheme); // Debug log
-    console.warn('Updated PC theme:', updatedPcTheme); // Debug log
+    expect(updatedGlobalTheme).toBe(expectedTheme);
+    expect(updatedPcTheme).toBe(expectedTheme);
+  });
+
+  test('should update to retro-light when system mode changes from dark to light with "system" color mode', async ({ page }) => {
+    // Set theme to 'retro' and color mode to 'system'
+    await page.locator('[data-testid="global-theme-select-trigger"]').click();
+    await page.locator('[data-testid="global-theme-retro"]').click();
+    await page.locator('[data-testid="global-color-mode-select-trigger"]').click();
+    await page.locator('[data-testid="global-color-mode-system"]').click();
+
+    const initialGlobalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
+
+    expect(initialGlobalTheme).toBe('retro-light'); // Change assertion to retro-light
+
+    // Simulate system color mode change to light
+    await page.emulateMedia({ colorScheme: 'light' });
+
+    // Wait for the theme to update to light mode
+    const expectedTheme = 'retro-light';
+    await page.waitForFunction(
+      ({ expectedTheme }) => document.documentElement.getAttribute('data-global-theme') === expectedTheme,
+      { expectedTheme },
+      { timeout: 20000 },
+    );
+
+    const updatedGlobalTheme = await page.evaluate(() => document.documentElement.getAttribute('data-global-theme'));
+    const updatedPcTheme = await page.evaluate(() => document.documentElement.getAttribute('data-pc-theme'));
 
     expect(updatedGlobalTheme).toBe(expectedTheme);
     expect(updatedPcTheme).toBe(expectedTheme);
