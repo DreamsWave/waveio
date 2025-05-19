@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@import './typography.css';
+
 /* Themes */
 @import './themes/default.css';
 @import './themes/blue.css';
@@ -14,6 +16,9 @@
 
 @theme inline {
   --spacing: 3px;
+  --font-minecraft: var(--font-minecraft);
+  --font-monocraft: var(--font-monocraft);
+  --font-sharetech: var(--font-sharetech);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
