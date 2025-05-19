@@ -1,13 +1,14 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-import webpack from 'webpack'; // Need to import webpack here
+import webpack from 'webpack';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
-    '@storybook/addon-onboarding',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
+    '@storybook/addon-themes',
   ],
   framework: {
     name: '@storybook/nextjs',
@@ -32,7 +33,6 @@ const config: StorybookConfig = {
       };
     }
 
-    // Ensure config.plugins is an array before pushing
     if (!config.plugins) {
       config.plugins = [];
     }

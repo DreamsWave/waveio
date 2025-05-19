@@ -11,6 +11,7 @@
 @custom-variant dark (&:where([data-theme$=dark], [data-theme$=dark] *));
 
 @theme inline {
+  --spacing: 3px;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
