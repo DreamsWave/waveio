@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { HomeIcon, SettingsIcon } from 'lucide-react';
+import Link from 'next/link';
 import {
   Sidebar,
   SidebarContent,
@@ -10,8 +12,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { HomeIcon, SettingsIcon } from 'lucide-react';
-import Link from 'next/link';
 
 const meta = {
   title: 'Components/Sidebar',

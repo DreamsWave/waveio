@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import Image from 'next/image';
 import BackgroundImage from '@/assets/storybook/placeholder-background-image.jpg';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import Image from 'next/image';
 
 const meta = {
   title: 'Components/AspectRatio',

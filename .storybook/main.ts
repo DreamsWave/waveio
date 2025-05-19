@@ -2,7 +2,10 @@ import type { StorybookConfig } from '@storybook/nextjs';
 import webpack from 'webpack';
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: [
+    '../src/**/*.mdx',
+    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -13,6 +16,10 @@ const config: StorybookConfig = {
   framework: {
     name: '@storybook/nextjs',
     options: {},
+  },
+  docs: {
+    autodocs: true,
+    defaultName: 'Documentation',
   },
   staticDirs: ['../public'],
   core: {
@@ -43,6 +50,39 @@ const config: StorybookConfig = {
         require.resolve('./empty-module.js'),
       ),
     );
+
+    // Update CSS handling
+    if (config.module?.rules) {
+      // Remove existing CSS rules
+      config.module.rules = config.module.rules.filter(
+        rule => rule && typeof rule === 'object' && 'test' in rule && !rule.test?.toString().includes('css'),
+      );
+
+      // Add our CSS rules
+      config.module.rules.push({
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  '@tailwindcss/postcss',
+                  'autoprefixer',
+                ],
+              },
+            },
+          },
+        ],
+      });
+    }
 
     return config;
   },

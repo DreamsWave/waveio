@@ -8,6 +8,8 @@
 @import './themes/green.css';
 @import './themes/purple.css';
 
+@import './utilities.css';
+
 @custom-variant dark (&:where([data-theme$=dark], [data-theme$=dark] *));
 
 @theme inline {
@@ -47,11 +49,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-}
-
-/* PC theme styles (inherit from global unless overridden) */
-html[data-pc-theme='inherit'] [data-theme-pc='true'] {
-  /* Inherit all variables from the global theme */
 }
 
 /* Apply variables */

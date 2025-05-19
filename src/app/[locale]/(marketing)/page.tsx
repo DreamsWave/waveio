@@ -1,10 +1,10 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import dynamic from 'next/dynamic';
 import { CleanThemeStorageButton } from '@/components/clean-theme-storage-button';
 import { ThemeToggles } from '@/components/theme-toggles';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ThemeProvider } from '@/libs/theme';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import dynamic from 'next/dynamic';
 
 const PC = dynamic(() => import('@/components/PC'), {
   ssr: true, // Enable server-side rendering

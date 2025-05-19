@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import { PostHogProvider } from '@/components/analytics/PostHogProvider';
-import { DemoBadge } from '@/components/DemoBadge';
-import { routing } from '@/libs/i18nRouting';
-import { ThemeProvider } from '@/libs/theme';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import { PostHogProvider } from '@/components/analytics/PostHogProvider';
+import { DemoBadge } from '@/components/DemoBadge';
+import { routing } from '@/libs/i18nRouting';
+import { ThemeProvider } from '@/libs/theme';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {

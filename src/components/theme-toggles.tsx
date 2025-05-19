@@ -1,9 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTheme } from '@/libs/theme';
 import { COLOR_MODES, THEMES } from '@/utils/constants';
-import { useEffect, useState } from 'react';
 
 export const ThemeToggles = ({ type }: { type: 'global' | 'pc' }) => {
   const { theme, colorMode, setTheme, setColorMode } = useTheme();

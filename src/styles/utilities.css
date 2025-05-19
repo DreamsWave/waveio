@@ -1,0 +1,166 @@
+:root {
+  --sunken-texture: url('../assets/textures/desktop/sunken.svg');
+  --sunken-bordered-texture: url('../assets/textures/desktop/sunken-bordered.svg');
+  --sunken-rounded-texture: url('../assets/textures/desktop/sunken-rounded.svg');
+  --sunken-rounded-bordered-texture: url('../assets/textures/desktop/sunken-rounded-bordered.svg');
+  --raised-texture: url('../assets/textures/desktop/raised.svg');
+  --raised-bordered-texture: url('../assets/textures/desktop/raised-bordered.svg');
+  --raised-rounded-texture: url('../assets/textures/desktop/raised-rounded.svg');
+  --raised-rounded-bordered-texture: url('../assets/textures/desktop/raised-rounded-bordered.svg');
+}
+
+@layer utilities {
+  .raised {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--raised-texture);
+    border-image-width: var(--spacing);
+    border-image-slice: 1;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--sunken-texture);
+      border-image-width: var(--spacing);
+      border-image-slice: 1;
+      background-clip: padding-box;
+    }
+  }
+  .raised-rounded {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--raised-rounded-texture);
+    border-image-width: var(--spacing);
+    border-image-slice: 1;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--sunken-rounded-texture);
+      border-image-width: var(--spacing);
+      border-image-slice: 1;
+      background-clip: padding-box;
+    }
+  }
+  .raised-bordered {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--raised-bordered-texture);
+    border-image-width: calc(var(--spacing) * 2);
+    border-image-slice: 2;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--sunken-bordered-texture);
+      border-image-width: calc(var(--spacing) * 2);
+      border-image-slice: 2;
+      background-clip: padding-box;
+    }
+  }
+  .raised-rounded-bordered {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--raised-rounded-bordered-texture);
+    border-image-width: calc(var(--spacing) * 2);
+    border-image-slice: 2;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--sunken-rounded-bordered-texture);
+      border-image-width: calc(var(--spacing) * 2);
+      border-image-slice: 2;
+      background-clip: padding-box;
+    }
+  }
+
+  .sunken {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--sunken-texture);
+    border-image-width: var(--spacing);
+    border-image-slice: 1;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--raised-texture);
+      border-image-width: var(--spacing);
+      border-image-slice: 1;
+      background-clip: padding-box;
+    }
+  }
+  .sunken-rounded {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--sunken-rounded-texture);
+    border-image-width: var(--spacing);
+    border-image-slice: 1;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--raised-rounded-texture);
+      border-image-width: var(--spacing);
+      border-image-slice: 1;
+      background-clip: padding-box;
+    }
+  }
+  .sunken-bordered {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--sunken-bordered-texture);
+    border-image-width: calc(var(--spacing) * 2);
+    border-image-slice: 2;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--raised-bordered-texture);
+      border-image-width: calc(var(--spacing) * 2);
+      border-image-slice: 2;
+      background-clip: padding-box;
+    }
+  }
+  .sunken-rounded-bordered {
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--spacing);
+    border-image: var(--sunken-rounded-bordered-texture);
+    border-image-width: calc(var(--spacing) * 2);
+    border-image-slice: 2;
+    background-clip: padding-box;
+
+    &:active {
+      border-style: solid;
+      border-color: transparent;
+      border-width: var(--spacing);
+      border-image: var(--raised-rounded-bordered-texture);
+      border-image-width: calc(var(--spacing) * 2);
+      border-image-slice: 2;
+      background-clip: padding-box;
+    }
+  }
+}
