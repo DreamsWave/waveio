@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/DreamsWave/waveio/compare/v1.0.0...v1.1.0) (2025-05-19)
+
+
+### Features
+
+* add new themes and refactor theme management ([e68124c](https://github.com/DreamsWave/waveio/commit/e68124cf66398459a1c715e4053ee648e7fe615d))
+
 # 1.0.0 (2025-05-11)
 
 
