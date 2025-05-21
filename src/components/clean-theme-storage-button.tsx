@@ -7,6 +7,6 @@ export const CleanThemeStorageButton = () => {
     localStorage.removeItem('theme-pc');
   }
 
-  return (<Button onClick={cleanStorage} className="bg-red-500">Clean localStorage</Button>
+  return (<Button onClick={cleanStorage} variant="destructive">Clean localStorage</Button>
   );
 };

@@ -45,13 +45,6 @@ export const Default: Story = {
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary',
-    children: 'Secondary',
-  },
-};
-
 export const Destructive: Story = {
   args: {
     variant: 'destructive',
@@ -73,6 +66,14 @@ export const Ghost: Story = {
   },
 };
 
+export const GhostDisabled: Story = {
+  args: {
+    variant: 'ghost',
+    disabled: true,
+    children: 'Ghost disabled',
+  },
+};
+
 export const Link: Story = {
   args: {
     variant: 'link',
@@ -82,7 +83,6 @@ export const Link: Story = {
 
 export const Icon: Story = {
   args: {
-    variant: 'outline',
     size: 'icon',
     children: <ChevronRight />,
   },
@@ -130,5 +130,12 @@ export const Large: Story = {
   args: {
     size: 'lg',
     children: 'Large',
+  },
+};
+
+export const Sunken: Story = {
+  args: {
+    variant: 'sunken',
+    children: 'Sunken',
   },
 };

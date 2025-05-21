@@ -1,12 +1,4 @@
 @font-face {
-  font-family: 'Minecraft';
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-  src: url('../assets/fonts/Minecraft/minecraft.ttf') format('truetype');
-}
-
-@font-face {
   font-family: 'Monocraft';
   font-weight: normal;
   font-style: normal;
@@ -14,16 +6,6 @@
   src: url('../assets/fonts/Monocraft/Monocraft.otf') format('opentype');
 }
 
-@font-face {
-  font-family: 'ShareTech';
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-  src: url('../assets/fonts/ShareTech/ShareTechMonoRegular_0.otf') format('opentype');
-}
-
 :root {
-  --font-minecraft: 'Minecraft', 'sans-serif';
   --font-monocraft: 'Monocraft', 'sans-serif';
-  --font-sharetech: 'ShareTech', 'sans-serif';
 }

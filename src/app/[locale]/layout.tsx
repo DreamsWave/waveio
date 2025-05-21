@@ -77,7 +77,7 @@ document.documentElement.setAttribute('data-pc-theme', pcResolvedTheme);
       <head>
         <script dangerouslySetInnerHTML={{ __html: initialScript }} />
       </head>
-      <body className="font-sharetech">
+      <body>
         <ThemeProvider storageKey="theme">
           <NextIntlClientProvider>
             <PostHogProvider>
