@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/DreamsWave/waveio/compare/v1.1.0...v1.2.0) (2025-05-19)
+
+
+### Features
+
+* add fonts ([3238d07](https://github.com/DreamsWave/waveio/commit/3238d0751f0a320711e49c0b737365f149fe14d1))
+
 # [1.1.0](https://github.com/DreamsWave/waveio/compare/v1.0.0...v1.1.0) (2025-05-19)
 
 
