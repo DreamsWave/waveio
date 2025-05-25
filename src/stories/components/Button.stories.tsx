@@ -132,10 +132,3 @@ export const Large: Story = {
     children: 'Large',
   },
 };
-
-export const Sunken: Story = {
-  args: {
-    variant: 'sunken',
-    children: 'Sunken',
-  },
-};

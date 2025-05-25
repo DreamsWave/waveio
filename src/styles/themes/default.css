@@ -1,5 +1,6 @@
 html[data-global-theme='default-light'],
 html[data-pc-theme='default-light'] [data-theme-pc='true'] {
+  --spacing: 4px;
   --radius: 0.625rem;
   --background: oklch(0.826 0.0315 258.94);
   --foreground: oklch(0.145 0 0);
@@ -32,6 +33,15 @@ html[data-pc-theme='default-light'] [data-theme-pc='true'] {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --shadow-light: oklch(0.9755 0.0045 258.32);
+  --shadow-dark: oklch(0.6337 0.0222 257.5);
+  --border-primary: oklch(0.39 0.0072 264.48);
+  --border-secondary: oklch(0.6337 0.0222 257.5) oklch(0.39 0.0072 264.48) oklch(0.39 0.0072 264.48)
+    oklch(0.6337 0.0222 257.5);
+  --raised-background: oklch(0.826 0.0315 258.94);
+  --sunken-background: oklch(0.9531 0.0097 252.81);
+  --outline-primary: oklch(0.6 0.23 285);
 }
 
 html[data-global-theme='default-dark'],

@@ -15,7 +15,7 @@
 @custom-variant dark (&:where([data-theme$=dark], [data-theme$=dark] *));
 
 @theme inline {
-  --spacing: 3px;
+  --spacing: 4px;
   --font-monocraft: var(--font-monocraft);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -53,8 +53,47 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Custom */
+  --color-shadow-light: var(--shadow-light);
+  --color-shadow-dark: var(--shadow-dark);
+  --color-border-primary: var(--border-primary);
+  --color-border-secondary: var(--border-secondary);
+  --color-raised-background: var(--raised-background);
+  --color-sunken-background: var(--sunken-background);
+  --color-outline-primary: var(--outline-primary);
+
   --font-accent: var(--font-monocraft);
   --radius-*: initial;
+
+  /* Clip paths */
+  --clip-path-rounded: polygon(
+    0px calc(100% - var(--spacing)),
+    var(--spacing) calc(100% - var(--spacing)),
+    var(--spacing) 100%,
+    calc(100% - var(--spacing)) 100%,
+    calc(100% - var(--spacing)) calc(100% - var(--spacing)),
+    100% calc(100% - var(--spacing)),
+    100% var(--spacing),
+    calc(100% - var(--spacing)) var(--spacing),
+    calc(100% - var(--spacing)) 0px,
+    var(--spacing) 0px,
+    var(--spacing) var(--spacing),
+    0px var(--spacing)
+  );
+  --clip-path-outline: polygon(
+    calc(0px - 2 * var(--spacing)) calc(100% + var(--spacing)),
+    calc(0px - var(--spacing)) calc(100% + var(--spacing)),
+    calc(0px - var(--spacing)) calc(100% + 2 * var(--spacing)),
+    calc(100% + var(--spacing)) calc(100% + 2 * var(--spacing)),
+    calc(100% + var(--spacing)) calc(100% + var(--spacing)),
+    calc(100% + 2 * var(--spacing)) calc(100% + var(--spacing)),
+    calc(100% + 2 * var(--spacing)) calc(0px - var(--spacing)),
+    calc(100% + var(--spacing)) calc(0px - var(--spacing)),
+    calc(100% + var(--spacing)) calc(0px - 2 * var(--spacing)),
+    calc(0px - var(--spacing)) calc(0px - 2 * var(--spacing)),
+    calc(0px - var(--spacing)) calc(0px - var(--spacing)),
+    calc(0px - 2 * var(--spacing)) calc(0px - var(--spacing))
+  );
 }
 
 /* Apply variables */

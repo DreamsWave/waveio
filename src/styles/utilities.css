@@ -1,122 +1,109 @@
-:root {
-  --border-texture: url('../assets/textures/desktop/border.svg');
-  --sunken-texture: url('../assets/textures/desktop/sunken.svg');
-  --sunken-bordered-texture: url('../assets/textures/desktop/sunken-bordered.svg');
-  --sunken-rounded-texture: url('../assets/textures/desktop/sunken-rounded.svg');
-  --sunken-rounded-bordered-texture: url('../assets/textures/desktop/sunken-rounded-bordered.svg');
-  --raised-texture: url('../assets/textures/desktop/raised.svg');
-  --raised-bordered-texture: url('../assets/textures/desktop/raised-bordered.svg');
-  --raised-rounded-texture: url('../assets/textures/desktop/raised-rounded.svg');
-  --raised-rounded-bordered-texture: url('../assets/textures/desktop/raised-rounded-bordered.svg');
+@utility raised {
+  position: relative;
+  background-clip: padding-box;
+  border: var(--spacing) solid transparent;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--spacing));
+    left: calc(-1 * var(--spacing));
+    height: calc(100% + var(--spacing) * 2);
+    width: calc(100% + var(--spacing) * 2);
+    box-shadow:
+      var(--shadow-light) var(--spacing) var(--spacing) 0px 0px inset,
+      var(--shadow-dark) calc(-1 * var(--spacing)) calc(-1 * var(--spacing)) 0px 0px inset;
+    transition: box-shadow 0.2s;
+    will-change: box-shadow;
+  }
+
+  &:active:before {
+    box-shadow:
+      var(--shadow-dark) var(--spacing) var(--spacing) 0px 0px inset,
+      var(--shadow-light) calc(-1 * var(--spacing)) calc(-1 * var(--spacing)) 0px 0px inset;
+  }
 }
 
-@layer utilities {
-  /* Base class for all border effects */
-  .border-effect {
-    border-style: solid;
-    border-color: transparent;
-    border-width: var(--border-width, var(--spacing));
-    border-image-width: var(--border-width, var(--spacing));
-    border-image-slice: var(--border-slice, 1);
-    background-clip: padding-box;
-  }
+/* Sunken effect with shadows */
+@utility sunken {
+  position: relative;
+  background-clip: padding-box;
+  border: var(--spacing) solid transparent;
 
-  /* Specific effect classes */
-  .bordered {
-    --border-width: var(--spacing);
-    --border-slice: 1;
-    border-image-source: var(--border-texture);
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--spacing));
+    left: calc(-1 * var(--spacing));
+    height: calc(100% + var(--spacing) * 2);
+    width: calc(100% + var(--spacing) * 2);
+    box-shadow:
+      var(--shadow-dark) var(--spacing) var(--spacing) 0px 0px inset,
+      var(--shadow-light) calc(-1 * var(--spacing)) calc(-1 * var(--spacing)) 0px 0px inset;
+    transition: box-shadow 0.2s;
+    will-change: box-shadow;
   }
+}
 
-  .ghost {
-    --border-width: var(--spacing);
-    --border-slice: 1;
-    &:hover {
-      border-image-source: var(--raised-texture);
-    }
-    &:active {
-      border-image-source: var(--sunken-texture);
-      padding-top: 2px;
-    }
+/* Modifier for rounded corners */
+.rounded:before,
+.rounded:after {
+  clip-path: var(--clip-path-rounded);
+  top: -4px;
+  left: -4px;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+}
+
+/* Primary border style */
+@utility bordered {
+  position: relative;
+  background-clip: padding-box;
+  border: var(--spacing) solid transparent;
+  border-width: var(--spacing);
+  border-style: solid;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--spacing));
+    left: calc(-1 * var(--spacing));
+    height: calc(100% + var(--spacing) * 2);
+    width: calc(100% + var(--spacing) * 2);
+    border: var(--spacing) solid var(--border-primary);
+    clip-path: var(--clip-path-rounded);
   }
+}
 
-  .raised {
-    --border-width: var(--spacing);
-    --border-slice: 1;
-    border-image-source: var(--raised-texture);
-    &:active {
-      border-image-source: var(--sunken-texture);
-      padding-top: 2px;
-    }
+/* Secondary border style with custom colors */
+@utility bordered-secondary {
+  position: relative;
+  background-clip: padding-box;
+  border: var(--spacing) solid transparent;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--spacing));
+    left: calc(-1 * var(--spacing));
+    height: 100%;
+    width: 100%;
+    border: var(--spacing) solid;
+    border-color: var(--border-secondary);
+    clip-path: var(--clip-path-rounded);
   }
+}
 
-  .raised-rounded {
-    --border-width: var(--spacing);
-    --border-slice: 1;
-    border-image-source: var(--raised-rounded-texture);
-    &:active {
-      border-image-source: var(--sunken-rounded-texture);
-      padding-top: 2px;
-    }
-  }
+@utility outline {
+  outline: var(--spacing) solid var(--outline-primary);
+  outline-offset: var(--spacing);
+  clip-path: var(--clip-path-outline);
+}
 
-  .raised-bordered {
-    --border-width: calc(var(--spacing) * 2);
-    --border-slice: 2;
-    border-image-source: var(--raised-bordered-texture);
-    &:active {
-      border-image-source: var(--sunken-bordered-texture);
-      padding-top: 2px;
-    }
-  }
-
-  .raised-rounded-bordered {
-    --border-width: calc(var(--spacing) * 2);
-    --border-slice: 2;
-    border-image-source: var(--raised-rounded-bordered-texture);
-    &:active {
-      border-image-source: var(--sunken-rounded-bordered-texture);
-      padding-top: 2px;
-    }
-  }
-
-  .sunken {
-    --border-width: var(--spacing);
-    --border-slice: 1;
-    border-image-source: var(--sunken-texture);
-    &:active {
-      border-image-source: var(--raised-texture);
-      padding-bottom: 2px;
-    }
-  }
-
-  .sunken-rounded {
-    --border-width: var(--spacing);
-    --border-slice: 1;
-    border-image-source: var(--sunken-rounded-texture);
-    &:active {
-      border-image-source: var(--raised-rounded-texture);
-      padding-bottom: 2px;
-    }
-  }
-
-  .sunken-bordered {
-    --border-width: calc(var(--spacing) * 2);
-    --border-slice: 2;
-    border-image-source: var(--sunken-bordered-texture);
-    &:active {
-      border-image-source: var(--raised-bordered-texture);
-      padding-bottom: 2px;
-    }
-  }
-
-  .sunken-rounded-bordered {
-    --border-width: calc(var(--spacing) * 2);
-    --border-slice: 2;
-    border-image-source: var(--sunken-rounded-bordered-texture);
-    &:active {
-      border-image-source: var(--raised-rounded-bordered-texture);
-      padding-bottom: 2px;
-    }
+.focus-visible\:outline {
+  &:focus-visible {
+    outline: var(--spacing) solid var(--outline-primary);
+    outline-offset: var(--spacing);
+    clip-path: var(--clip-path-outline);
   }
 }
