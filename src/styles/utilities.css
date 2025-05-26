@@ -49,10 +49,10 @@
 .rounded:before,
 .rounded:after {
   clip-path: var(--clip-path-rounded);
-  top: -4px;
-  left: -4px;
-  height: calc(100% + 8px);
-  width: calc(100% + 8px);
+  top: calc(-1 * var(--spacing));
+  left: calc(-1 * var(--spacing));
+  height: calc(100% + var(--spacing) * 2);
+  width: calc(100% + var(--spacing) * 2);
 }
 
 /* Primary border style */
@@ -105,5 +105,6 @@
     outline: var(--spacing) solid var(--outline-primary);
     outline-offset: var(--spacing);
     clip-path: var(--clip-path-outline);
+    z-index: var(--z-outline);
   }
 }

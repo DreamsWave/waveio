@@ -14,13 +14,17 @@
 
 @custom-variant dark (&:where([data-theme$=dark], [data-theme$=dark] *));
 
+:root {
+  --spacing: 3px;
+
+  /* z-index */
+  --z-outline: 9999;
+}
+
 @theme inline {
-  --spacing: 4px;
+  --radius-*: initial;
+  --spacing: var(--spacing);
   --font-monocraft: var(--font-monocraft);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -54,6 +58,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Custom */
+  --font-accent: var(--font-monocraft);
   --color-shadow-light: var(--shadow-light);
   --color-shadow-dark: var(--shadow-dark);
   --color-border-primary: var(--border-primary);
@@ -61,9 +66,6 @@
   --color-raised-background: var(--raised-background);
   --color-sunken-background: var(--sunken-background);
   --color-outline-primary: var(--outline-primary);
-
-  --font-accent: var(--font-monocraft);
-  --radius-*: initial;
 
   /* Clip paths */
   --clip-path-rounded: polygon(
