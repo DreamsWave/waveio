@@ -1,75 +1,73 @@
 {
   "RootLayout": {
-    "home_link": "Home",
-    "about_link": "About",
-    "counter_link": "Counter",
-    "portfolio_link": "Portfolio",
-    "sign_in_link": "Sign in",
-    "sign_up_link": "Sign up"
+    "home_link": "Главная",
+    "about_link": "О нас",
+    "counter_link": "Счетчик",
+    "portfolio_link": "Портфолио",
+    "sign_in_link": "Войти",
+    "sign_up_link": "Регистрация"
   },
   "BaseTemplate": {
-    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
-    "made_with": "Made with <author></author>."
+    "description": "Стартовый код для вашей Nextjs Boilerplate с CSS Tailwind"
   },
   "Index": {
-    "meta_title": "Next.js Boilerplate Presentation",
-    "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework.",
-    "sponsors_title": "Sponsors"
+    "meta_title": "Next.js Boilerplate презентация",
+    "meta_description": "Следующая версия js Boilerplate является идеальным стартовым кодом для вашего проекта. Создайте приложение React с помощью фреймворка Next.js."
   },
   "Counter": {
-    "meta_title": "Counter",
-    "meta_description": "An example of DB operation",
-    "loading_counter": "Loading counter...",
-    "security_powered_by": "Security, bot detection and rate limiting powered by"
+    "meta_title": "Счетчик",
+    "meta_description": "Пример операции с БД",
+    "loading_counter": "Загрузка счетчика...",
+    "security_powered_by": "Безопасность, обнаружение ботов и ограничение скорости на основе"
   },
   "CounterForm": {
-    "presentation": "The counter is stored in the database and incremented by the value you provide.",
-    "label_increment": "Increment by",
-    "button_increment": "Increment"
+    "presentation": "Счетчик хранится в базе данных и увеличивается на величину, которую вы предоставляете.",
+    "label_increment": "Увеличить на",
+    "button_increment": "Прирост"
   },
   "CurrentCount": {
-    "count": "Count: {count}"
+    "count": "Счет: {count}"
   },
   "About": {
-    "meta_title": "About",
-    "meta_description": "About page description",
-    "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
-    "translation_powered_by": "Translation powered by"
+    "meta_title": "О программе",
+    "meta_description": "Описание страницы",
+    "about_paragraph": "Добро пожаловать на нашу страницу О программе! Мы - команда страстных людей, занимающихся созданием удивительного программного обеспечения.",
+    "translation_powered_by": "Перевод основан на"
   },
   "Portfolio": {
-    "meta_title": "Portfolio",
-    "meta_description": "Welcome to my portfolio page!",
-    "presentation": "Welcome to my portfolio page! Here you will find a carefully curated collection of my work and accomplishments. Through this portfolio, I'm to showcase my expertise, creativity, and the value I can bring to your projects.",
-    "portfolio_name": "Portfolio {name}",
-    "error_reporting_powered_by": "Error reporting powered by",
-    "coverage_powered_by": "Code coverage powered by"
+    "meta_title": "Портфолио",
+    "meta_description": "Добро пожаловать на мою страницу портфолио!",
+    "presentation": "Добро пожаловать на мою страницу портфолио! С помощью этого портфолио, я вижу свои знания, творческие способности и ценность, которую я могу принести вашим проектам.",
+    "portfolio_name": "Портфолио {name}",
+    "error_reporting_powered_by": "Отчет об ошибке основан на",
+    "coverage_powered_by": "Покрытие кода на основе"
   },
   "PortfolioSlug": {
-    "meta_title": "Portfolio {slug}",
-    "meta_description": "Portfolio {slug} description",
-    "header": "Portfolio {slug}",
-    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach. Garnered favorable responses from event attendees, resulting in a successful event with heightened participant engagement and increased brand visibility.",
-    "code_review_powered_by": "Code review powered by"
+    "meta_title": "Портфолио {slug}",
+    "meta_description": "Описание портфолио {slug}",
+    "header": "Портфолио {slug}",
+    "content": "Создан набор рекламных материалов и элементов брендинга для проведения корпоративного мероприятия. Создана единая визуально тема, включающая логотип, плакаты, баннеры и цифровые активы. Интегрируйте фирменный знак клиента в сочетании с современным и инновационным подходом. Оборот положительных отзывов от участников события, что привело к успешному мероприятию с повышенной вовлеченностью участников и повышенной привлекательностью бренда.",
+    "code_review_powered_by": "Обзор кода основан на"
   },
   "SignIn": {
-    "meta_title": "Sign in",
-    "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
+    "meta_title": "Войти",
+    "meta_description": "Войдите в свою учетную запись с помощью нашего удобного для пользователя процесса входа."
   },
   "SignUp": {
-    "meta_title": "Sign up",
-    "meta_description": "Effortlessly create an account through our intuitive sign-up process."
+    "meta_title": "Регистрация",
+    "meta_description": "Усилия по созданию учетной записи через интуитивно понятный процесс регистрации."
   },
   "Dashboard": {
-    "meta_title": "Dashboard",
-    "hello_message": "Hello {email}!",
-    "alternative_message": "Want to build your SaaS faster using the same stack? Try <url></url>."
+    "meta_title": "Панель",
+    "hello_message": "Здравствуйте, {email}!",
+    "alternative_message": "Хотите создать SaaS быстрее, используя тот же стек? Попробуйте <url></url>."
   },
   "UserProfile": {
-    "meta_title": "User Profile"
+    "meta_title": "Профиль пользователя"
   },
   "DashboardLayout": {
-    "dashboard_link": "Dashboard",
-    "user_profile_link": "Manage your account",
-    "sign_out": "Sign out"
+    "dashboard_link": "Панель",
+    "user_profile_link": "Управление аккаунтом",
+    "sign_out": "Выйти"
   }
 }
