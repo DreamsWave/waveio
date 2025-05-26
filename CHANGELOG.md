@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/DreamsWave/waveio/compare/v1.2.0...v1.3.0) (2025-05-26)
+
+
+### Features
+
+* add window control icons and enhance button component with active state support ([2510e1a](https://github.com/DreamsWave/waveio/commit/2510e1a2df731cdd9bbfa43272e8ee7009cc4232))
+
 # [1.2.0](https://github.com/DreamsWave/waveio/compare/v1.1.0...v1.2.0) (2025-05-19)
 
 
